@@ -3,7 +3,7 @@ import urllib.request
 import urllib.parse
 from urllib.error import HTTPError
 import json
-
+from modules.response import WeatherResponse
 
 class ApiHandler:
 
@@ -66,7 +66,9 @@ class ApiHandler:
 
         result = self.make_api_request(url, "GET", {})
 
-        return result
+        weather_response = WeatherResponse(result, units)
+
+        return weather_response
 
     def get_current_weather_by_city_and_state(self, city_name: str, state_name: str, country_code: str, units: str):
         """Gets the current weather for the requested city name
@@ -95,4 +97,6 @@ class ApiHandler:
             {}
         )
 
-        return result
+        weather_response = WeatherResponse(result, units)
+
+        return weather_response
