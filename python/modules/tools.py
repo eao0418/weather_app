@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+
 class Util:
     """A collection of utility methods for the program"""
 
@@ -13,11 +14,15 @@ class Util:
         country -- The ISO 3166 Alpha-2 country code that the city is in.
         """
         if not all(x.isalpha() or x.isspace() for x in city):
-            raise ValueError("The provided value does not match the pattern of a valid city")
+            raise ValueError(
+                "The provided value does not match the pattern of a valid city")
         if not state.isalpha():
-            raise ValueError("The provided value does not match the pattern of a valid state")
+            raise ValueError(
+                "The provided value does not match the pattern of a valid state")
         if not country.isalpha():
-            raise ValueError("The provided value does not match the pattern of a valid country code")
+            raise ValueError(
+                "The provided value does not match the pattern of a valid country code")
+
     @staticmethod
     def print_help(mode: str):
 
@@ -43,7 +48,7 @@ class Util:
         console_help_text = f"""
         
         The script will continue to request locations until requested to exit. 
-        type 'exit' or 'quit' in a prompt to leave the script.
+        You will be prompted to continue after each request.
         """
 
         if mode.lower() == "single":

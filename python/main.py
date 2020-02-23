@@ -4,12 +4,11 @@ import getpass
 import re
 
 from urllib.error import HTTPError
-#import modules.handler #ApiHandler
-#import modules.response #WeatherResponse
 from modules.response import WeatherResponse
 from modules.handler import ApiHandler
 from modules.tools import Util
 from modules.console import Console
+
 
 def main():
 
@@ -19,10 +18,11 @@ def main():
     system_help = "The measurement system to get results in.  Valid arguments are: imperial, metric, or kelvin"
     mode_help = "The mode to run the program in.  Valid arguments are: single, console"
 
-    parser.add_argument("--mode", required = True, help = mode_help)
-    parser.add_argument("--system", required = True, help = system_help)
+    parser.add_argument("--mode", required=True, help=mode_help)
+    parser.add_argument("--system", required=True, help=system_help)
 
-    key = getpass.getpass("Please provide your API key for openweathermap.org: ")
+    key = getpass.getpass(
+        "Please provide your API key for openweathermap.org: ")
 
     args = parser.parse_args()
 
@@ -46,6 +46,7 @@ def main():
         key = ""
         exit(1)
 
+
 def single_mode(key: str, system: str):
     """Runs the weather API in single mode. 
 
@@ -65,7 +66,8 @@ def single_mode(key: str, system: str):
     handler = ApiHandler(key)
 
     try:
-        output = handler.get_current_weather_by_city_and_state(city, state, country, system)
+        output = handler.get_current_weather_by_city_and_state(
+            city, state, country, system)
     except HTTPError as he:
         if he.getcode() == 404:
             print("The requested city, state, and country combination was not found in the weather api system, please try again")
@@ -95,6 +97,8 @@ def single_mode(key: str, system: str):
         print("No valid output was retrieved from the API")
 
     key = ""
+
+
 def console_mode(key: str, system: str):
 
     Console.run(key, system)
