@@ -3,6 +3,7 @@ import urllib.request
 import urllib.parse
 from urllib.error import HTTPError
 import json
+from modules.response import WeatherResponse
 
 
 class ApiHandler:
@@ -20,8 +21,6 @@ class ApiHandler:
         """
         self.host_name = "api.openweathermap.org"
         self.api_key = key
-
-        return
 
     def make_api_request(self, url: str, method: str, headers: dict):
         """Makes an API request to the specified URL
@@ -66,7 +65,9 @@ class ApiHandler:
 
         result = self.make_api_request(url, "GET", {})
 
-        return result
+        weather_response = WeatherResponse(result, units)
+
+        return weather_response
 
     def get_current_weather_by_city_and_state(self, city_name: str, state_name: str, country_code: str, units: str):
         """Gets the current weather for the requested city name
@@ -86,7 +87,8 @@ class ApiHandler:
             raise AttributeError("The value provided for units was not valid")
 
         url = "https://" + self.host_name + "/data/2.5/weather?q="
-        url += city_name + "," + state_name + "," + country_code + "&appid=" + self.api_key
+        url += city_name + "," + state_name + "," + \
+            country_code + "&appid=" + self.api_key
         url += "&units=" + units
 
         result = self.make_api_request(
@@ -95,4 +97,6 @@ class ApiHandler:
             {}
         )
 
-        return result
+        weather_response = WeatherResponse(result, units)
+
+        return weather_response
